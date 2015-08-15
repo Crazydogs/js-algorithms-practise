@@ -1,12 +1,12 @@
-// 基于链表的背包实现
+// 基于链表的栈实现
 var ListNode = require('./listNode.js');
 
-var bag = function () {
+var stack = function () {
     this.total = 0;
     this.first = null;
-};
+}
 
-bag.prototype.add = function (item) {
+stack.prototype.push = function (item) {
     if (this.total === 0) {
         this.first = new ListNode(item);
     } else {
@@ -15,13 +15,22 @@ bag.prototype.add = function (item) {
     }
     this.total += 1;
 };
-bag.prototype.isEmpty = function () {
+stack.prototype.pop = function () {
+    if (this.total) {
+        var result = this.first.content;
+        this.first = this.first.next;
+        this.total -= 1;
+        return result;
+    }
+    return null;
+};
+stack.prototype.isEmpty = function () {
     return this.total === 0;
 };
-bag.prototype.size = function () {
+stack.prototype.size = function () {
     return this.total;
 };
-bag.prototype.iterator = function () {
+stack.prototype.iterator = function () {
     var self = this;
     return {
         pointer: self.first,
@@ -36,6 +45,6 @@ bag.prototype.iterator = function () {
             return null;
         }
     }
-}
+};
 
-module.exports = bag;
+module.exports = stack;

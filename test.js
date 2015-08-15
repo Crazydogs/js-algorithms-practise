@@ -1,11 +1,13 @@
 var Bag = require('./bagByList.js');
+var Stack = require('./stackByList.js');
 
-var myBag = new Bag();
-console.log(myBag.isEmpty());
-myBag.add(1);
-myBag.add(2);
-myBag.add(3);
-myBag.add(4);
+var myStack = new Stack();
+myStack.push(1);
+myStack.push(2);
+myStack.push(3);
+myStack.pop();
+myStack.push(4);
 
-console.log(myBag.first);
-console.log(myBag.isEmpty());
+var iterator = myStack.iterator();
+while(iterator.next()) {
+}
