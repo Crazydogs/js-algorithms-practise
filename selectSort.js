@@ -3,7 +3,7 @@
 var selectSort = function (list, compare) {
     var compareFunciont = compare || function (a, b) {
         if (a > b)  return 1;
-        if (a == b)  return 1;
+        if (a == b)  return 0;
         if (a < b)  return -1;
     };
 
@@ -15,7 +15,10 @@ var selectSort = function (list, compare) {
         for (var i = 0; i < list.length; i++) {
             var min = i;
             for (var j = i; j < list.length; j++) {
-                if (list[j] < list[min]) min = j;
+                // if (list[j] < list[min]) min = j;
+                if (compareFunciont(list[j], list[min]) === -1) {
+                    min = j;
+                }
             }
             var temp = list[min];
             list[min] = list[i];
