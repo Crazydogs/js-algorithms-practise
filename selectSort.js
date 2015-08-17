@@ -23,6 +23,8 @@ var selectSort = function (list, compare) {
         }
         return list;
     }
+    
+    return sort();
 }
 
-module.exports = selectSort();
+module.exports = selectSort;
