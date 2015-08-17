@@ -1,6 +1,13 @@
-var selectSort = require('./selectSort.js');
-var insertSort = require('./insertSort.js');
+var Union = require('./union.js');
 
-var testList = [3, 1, 5, 2, 1];
-console.log(selectSort(testList));
-console.log(insertSort(testList));
+var myUnion = new Union(10);
+console.log(myUnion.node);
+myUnion.union(1, 2);
+console.log(myUnion.node);
+myUnion.union(2, 3);
+console.log(myUnion.node);
+myUnion.union(3, 9);
+console.log(myUnion.node);
+myUnion.union(9, 1);
+console.log(myUnion.node);
+console.log(myUnion.count);
