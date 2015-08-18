@@ -1,13 +1,3 @@
-var Union = require('./union.js');
+var mergeSort = require('./mergeSort.js');
 
-var myUnion = new Union(10);
-console.log(myUnion.node);
-myUnion.union(1, 2);
-console.log(myUnion.node);
-myUnion.union(2, 3);
-console.log(myUnion.node);
-myUnion.union(3, 9);
-console.log(myUnion.node);
-myUnion.union(9, 1);
-console.log(myUnion.node);
-console.log(myUnion.count);
+console.log(mergeSort([6,2,8,1,6,37,5]));
