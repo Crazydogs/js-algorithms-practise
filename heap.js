@@ -10,6 +10,15 @@ Heap.prototype.add = function (item) {
     this.length += 1;
     this.float(this.length);
 }
+Heap.prototype.pop = function () {
+    if (this.length < 1) {
+        return null;
+    }
+    this.list[1] = this.list[this.length];
+    this.list[this.length] = null;
+    this.length -= 1;
+    this.sink(1);
+}
 
 Heap.prototype.sink = function (index) {
     var list = this.list;
