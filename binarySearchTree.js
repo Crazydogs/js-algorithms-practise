@@ -73,7 +73,37 @@ BinarySearchTree.prototype.get = function (key, currentNode) {
 BinarySearchTree.prototype.delete = function (key, currentNode, parentNode) {
     var current = currentNode || this.root;
     if (!current) {
-        // todo
+        return null;
+    }
+
+    var compareResult = this.compare(key, currentNode.content.key);
+    if (compareResult === 0) {
+        
+    } else if (compareResult === -1) {
+    }
+}
+BinarySearchTree.prototype.getMin = function (currentNode) {
+    var current = currentNode || this.root;
+    if (!current) {
+        return null;
+    }
+
+    if (current.left) {
+        return this.getMin(current.left);
+    } else {
+        return current.content;
+    }
+}
+BinarySearchTree.prototype.getMax = function (currentNode) {
+    var current = currentNode || this.root;
+    if (!current) {
+        return null;
+    }
+
+    if (current.right) {
+        return this.getMax(current.right);
+    } else {
+        return current.content;
     }
 }
 BinarySearchTree.prototype.contains = function () {

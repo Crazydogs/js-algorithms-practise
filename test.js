@@ -37,7 +37,11 @@ myTree.put({key: 2, val: 'test1'});
 myTree.put({key: 12, val: 'test12'});
 myTree.put({key: 0, val: 'test0'});
 myTree.put({key: 2, val: 'test3'});
+console.log('min:');
+console.log(myTree.getMin());
 myTree.put({key: 3, val: 'test5'});
+console.log('max:');
+console.log(myTree.getMax());
 
 console.log(myTree.get(3));
 console.log(myTree.get(2));
