@@ -87,7 +87,6 @@ BinarySearchTree.prototype.getMin = function (currentNode) {
     if (!current) {
         return null;
     }
-
     if (current.left) {
         return this.getMin(current.left);
     } else {
@@ -99,11 +98,32 @@ BinarySearchTree.prototype.getMax = function (currentNode) {
     if (!current) {
         return null;
     }
-
     if (current.right) {
         return this.getMax(current.right);
     } else {
         return current.content;
+    }
+}
+BinarySearchTree.prototype.floor = function (currentNode) {
+    var current = currentNode || this.root;
+    if (!current) {
+        return null;
+    }
+    if (current.left) {
+        return this.getMax(current.left);
+    } else {
+        return null;
+    }
+}
+BinarySearchTree.prototype.ceil = function (currentNode) {
+    var current = currentNode || this.root;
+    if (!current) {
+        return null;
+    }
+    if (current.right) {
+        return this.getMin(current.right);
+    } else {
+        return null;
     }
 }
 BinarySearchTree.prototype.contains = function () {

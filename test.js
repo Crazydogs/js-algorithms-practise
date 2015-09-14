@@ -42,6 +42,10 @@ console.log(myTree.getMin());
 myTree.put({key: 3, val: 'test5'});
 console.log('max:');
 console.log(myTree.getMax());
+console.log('ceil:');
+console.log(myTree.ceil());
+console.log('floor:');
+console.log(myTree.floor());
 
 console.log(myTree.get(3));
 console.log(myTree.get(2));
