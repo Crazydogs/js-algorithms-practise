@@ -34,7 +34,9 @@ var BinarySearchTree = require('./binarySearchTree.js');
 var myTree = new BinarySearchTree();
 
 myTree.put({key: 2, val: 'test1'});
+console.log(myTree.root);
 myTree.put({key: 12, val: 'test12'});
+console.log(myTree.root);
 myTree.put({key: 0, val: 'test0'});
 myTree.put({key: 2, val: 'test3'});
 console.log('min:');

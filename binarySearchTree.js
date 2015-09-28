@@ -15,35 +15,38 @@ var BinarySearchTree = function (compare) {
 }
 
 BinarySearchTree.prototype.put = function (content, currentNode) {
-    if (!this.root) {
-        this.root = new TreeNode(content);
-        this.size += 1;
+    var self = this;
+
+    if (!self.root) {
+        self.root = new TreeNode(content);
+        self.size += 1;
         return;
     }
 
-    var currentNode = currentNode || this.root;
-    var compareResult = this.compare(content.key, currentNode.content.key);
+    function addNode(parentNode, pointer, content) {
+        var newNode = new TreeNode(content);
+        parentNode[pointer] = newNode;
+        self.size += 1;
+        return newNode;
+    }
+
+    var currentNode = currentNode || self.root;
+    var compareResult = self.compare(content.key, currentNode.content.key);
     if (compareResult === 0) {
-        return currentNode;
+        return currentNode;     // 已存在值不做处理
     } else if (compareResult === -1) {
         if (currentNode.left) {
-            this.put(content, currentNode.left);
+            self.put(content, currentNode.left);
             return;
         } else {
-            var newNode = new TreeNode(content);
-            currentNode.left = newNode;
-            this.size += 1;
-            return newNode;
+            addNode(currentNode, 'left', content);
         }
     } else if (compareResult === 1) {
         if (currentNode.right) {
-            this.put(content, currentNode.right);
+            self.put(content, currentNode.right);
             return;
         } else {
-            var newNode = new TreeNode(content);
-            currentNode.right = newNode;
-            this.size += 1;
-            return newNode;
+            addNode(currentNode, 'right', content);
         }
     }
 }
