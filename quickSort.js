@@ -1,7 +1,7 @@
 // 快速排序
 
 var quickSort = function (list, compare) {
-    var compareFunciont = compare || function (a, b) {
+    var compareFunction = compare || function (a, b) {
         if (a > b)  return 1;
         if (a == b)  return 0;
         if (a < b)  return -1;
@@ -11,24 +11,37 @@ var quickSort = function (list, compare) {
         return [];
     }
     
-    function sort(list) {
-        if (list.length == 1) {
-            return list
+    function sort(list, lo, hi) {
+        if (hi <= lo) {
+            return;
         }
+        let j = partition(list, lo, hi);
+        fort(list, lo, j-1);
+        fort(list, j+1, hi);
+    }
+    function partition(list, lo, hi) {
+        let i = lo;
+        let j = hi + 1;
+        let middle = list[lo];
 
-        var middle = list[0];
-        var left = [];
-        var right = [];
-
-        for (var i = 1; i < list.length; i++) {
-            if (list[i] < middle) {
-                left.push(list[i]);
-            } else {
-                right.push(list[i]);
+        while (true) {
+            while (compareFunction(list[++i], middle) == -1) {
+                if (i == hi) break;
             }
+            while (compareFunction(middle, list[--j]) == -1) {
+                if (j == lo) break;
+            }
+            if (i >= j) break;
+            swap(list, i, j);
         }
-
-        return sort(left).concat(middle, sort(right));
+        swap(list, lo, j);
+        return j;
+    }
+    function swap(list, x, y) {
+        // 交换元素
+        let temp = list[x];
+        list[x] = list[y];
+        list[y] = temp;
     }
 
     return sort(list);
