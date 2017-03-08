@@ -1,84 +1,65 @@
-// 最小堆的数组实现
+// 最小堆
 
-var Heap = function () {
-    this.list = [];
-    this.length = 0;
+function Heap() {
+    this.arr = [null];
+    this.size = 0;
 }
 
-Heap.prototype.add = function (item) {
-    this.list[this.length + 1] = item;
-    this.length += 1;
-    this.float(this.length);
+function leftIndex(index, heap) {
+    return index * 2 > heap.size ? null : index * 2;
 }
-Heap.prototype.pop = function () {
-    if (this.length < 1) {
-        return null;
+function rightIndex(index, heap) {
+    return index * 2 + 1 >  heap.size ? null : index * 2 + 1;
+}
+function parentIndex(index) {
+    return Math.floor(index / 2) || null;
+}
+function swap(arr, i, j) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+Heap.prototype.sink = function sink(index) {
+    let li = leftIndex(index, heap);
+    let ri = rightIndex(index, heap);
+    if (li || ri) {
+        let left = this.arr[li];
+        let right = this.arr[ri];
+        let middle = this.arr[index];
+
+        if (middle > Math.max(left, right)) {
+            let mini = left > right ? ri : li;
+            swap(arr, index, mini);
+            this.sink(mini);
+        } else {
+            return;
+        }
+    } else {
+        return;
     }
-    this.list[1] = this.list[this.length];
-    this.list[this.length] = null;
-    this.length -= 1;
+}
+Heap.prototype.swim = function swim(index) {
+    let pi = parentIndex(index);
+    if (!pi) {
+        return;
+    }
+    if (arr[index] < arr[pi]) {
+        swap(arr, index, pi);
+        this.swim(pi);
+    }
+}
+Heap.prototype.add = function add(item) {
+    this.size += 1;
+    this.arr[this.size] = item;
+    this.swim(size);
+}
+Heap.prototype.pop = function pop() {
+    swap(arr, 1, this.size);
+    let min = this.arr[this.size];
+    this.arr[this.size] = null;
+    this.size -= 1;
     this.sink(1);
-}
-
-Heap.prototype.sink = function (index) {
-    var list = this.list;
-    while (1) {
-        var leftIndex = this.getLeft(index);
-        var rightIndex = this.getRight(index);
-
-        var isBottom = true;
-        if (!leftIndex && !rightIndex) {
-            return;
-        }
-        if (leftIndex && list[index] > list[leftIndex]) {
-            isBottom = false;
-            var temp = list[index];
-            list[index] = list[leftIndex];
-            list[leftIndex] = temp;
-        }
-        if (rightIndex && list[index] > list[rightIndex]) {
-            isBottom = false;
-            var temp = list[index];
-            list[index] = list[rightIndex];
-            list[rightIndex] = temp;
-        }
-        if (isBottom) {
-            return;
-        }
-    }
-}
-Heap.prototype.float = function (index) {
-    var list = this.list;
-    while (1) {
-        if (!index || index == 1) {
-            return;
-        }
-        var isTop = true;
-        parentIndex = this.getParent(index);
-        if (list[index] < list[parentIndex]) {
-            var temp = list[index];
-            list[index] = list[parentIndex];
-            list[parentIndex] = temp;
-            isTop = false;
-        }
-        if (isTop) {
-            return;
-        }
-    }
-}
-Heap.prototype.getLeft = function (index) {
-    var result = index * 2;
-    return result > this.length ? 0 : result;
-}
-Heap.prototype.getRight = function (index) {
-    var result = index * 2 + 1;
-    return result > this.length ? 0 : result;
-}
-Heap.prototype.getParent = function (index) {
-    if (index <= 1) {
-        return 0;
-    }
-    return Math.floor(index/2);
 }
 
 module.exports = Heap;
