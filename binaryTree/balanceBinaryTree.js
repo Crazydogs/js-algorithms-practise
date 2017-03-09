@@ -31,3 +31,41 @@ BalanceBinaryTree.prototype.rotateRight = function rotateRight(node) {
     node.size = size(node.left) + size(node.right) + 1;
     return middle;
 }
+BalanceBinaryTree.prototype.flipColor = function flipColor(node) {
+    node.left.color = 'black';
+    node.right.color = 'black';
+    node.color = 'red';
+}
+BalanceBinaryTree.prototype.put = function(key, val) {
+    this.root = this.putOnNode(root, key, val);
+    this.root.color = 'black';
+}
+BalanceBinaryTree.prototype.putOnNode = function (node, key, val) {
+    if (node = null) {
+        return new TreeNode(key, val, 1, 'red');
+    }
+    if (key < node.key) {
+        node.left = this.putOnNode(node.left, key, val);
+    } else if (key > node.key) {
+        node.right = this.putOnNode(node.right, key, val);
+    } else {
+        node.val = val;
+    }
+    if (!this.isRed(node.left) && this.isRed(node.right)) {
+        this.rotateLeft(node);
+    }
+    if (this.isRed(node.left) && this.isRed(node.left.left)) {
+        this.rotateRight(node);
+    }
+    if (this.isRed(node.left) && this.isRed(node.right)) {
+        this.flipColor(node);
+    }
+    nodde.size = size(node.left) + size(node.right) + 1;
+    return node;
+}
+BalanceBinaryTree.prototype.isRed = function(node) {
+    return node ? (node.color == 'red' ) : false;
+}
+function size(node) {
+    return node ? node.size : 0;
+}
