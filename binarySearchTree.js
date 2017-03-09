@@ -1,166 +1,76 @@
 // 二叉查找树
 
-var TreeNode = require('./binaryTree.js');
+var TreeNode = require('./binaryTreeNode.js');
 
-var BinarySearchTree = function (compare) {
+function BinarySearchTree(compare) {
     this.size = 0;
     this.root = null;
-
-    // 比较方法
-    this.compare = compare || function (a, b) {
-        if (a > b)  return 1;
-        if (a == b)  return 0;
-        if (a < b)  return -1;
-    }
 }
 
-function addNode(parentNode, pointer, content) {
-    var newNode = new TreeNode(content);
-    parentNode[pointer] = newNode;
-    this.size += 1;
-    return newNode;
-}
-
-BinarySearchTree.prototype.put = function (content, currentNode) {
-    var self = this;
-    if (!self.root) {
-        self.root = new TreeNode(content);
-        self.size += 1;
-        return;
-    }
-
-    var currentNode = currentNode || self.root;
-    var compareResult = self.compare(content.key, currentNode.content.key);
-    if (compareResult === 0) {
-        return currentNode;     // 已存在值不做处理
-    } else if (compareResult === -1) {
-        if (currentNode.left) {
-            self.put(content, currentNode.left);
-            return;
-        } else {
-            addNode(currentNode, 'left', content);
-        }
-    } else if (compareResult === 1) {
-        if (currentNode.right) {
-            self.put(content, currentNode.right);
-            return;
-        } else {
-            addNode(currentNode, 'right', content);
-        }
-    }
-}
-BinarySearchTree.prototype.get = function (key, currentNode) {
-    var currentNode = currentNode || this.root;
-    if (!currentNode) {
+BinarySearchTree.prototype.get(node, key) {
+    if (node == null) {
         return null;
     }
 
-    var compareResult = this.compare(key, currentNode.content.key);
-    if (compareResult === 0) {
-        return currentNode.content;
-    } else if (compareResult === -1) {
-        if (currentNode.left) {
-            return this.get(key, currentNode.left);
-        } else {
-            return null;
-        }
-    } else if (compareResult === 1) {
-        if (currentNode.right) {
-            return this.get(key, currentNode.right);
-        } else {
-            return null;
-        }
-    }
-}
-BinarySearchTree.prototype.delete = function (key, currentNode, parentNode, parentLink) {
-    // 删除节点
-    var self = this;
-    var current = currentNode || self.root;
-    if (!current) {
-        return null;
-    }
-
-    var compareResult = self.compare(key, currentNode.content.key);
-    if (compareResult === 0) {
-        var childrenNodeNum = 0;
-        childrenNodeNum += currentNode.left ? 1 : 0;
-        childrenNodeNum += currentNode.right ? 1 : 0;
-
-        var removeNode = function () {
-        }
-
-        switch (childrenNodeNum) {
-            case 0:
-                if (parentNode) {
-                    parentNode[parentLink] = null;
-                } else {
-                    self.root = null;
-                }
-                break;
-            case 1:
-                if (parentNode) {
-                    parentNode[parentLink] = currentNode.left || currentNode.right;
-                } else {
-                    self.root = currentNode.left || currentNode.right;
-                }
-                break;
-            case 2:
-                break;
-        }
-        self.size -= 1;
-    } else if (compareResult === -1) {
-        self.delete(key, currentNode.left, currentNode, 'left');
-    } else if (compareResult === 1) {
-        self.delete(key, currentNode.right, currentNode, 'right');
-    }
-}
-BinarySearchTree.prototype.getMin = function (currentNode) {
-    var current = currentNode || this.root;
-    if (!current) {
-        return null;
-    }
-    if (current.left) {
-        return this.getMin(current.left);
+    if (key < node.key) {
+        return this.get(node.left, key);
+    } else if (key > node.key) {
+        return this.get(node.right, key);
     } else {
-        return current.content;
+        return node.val;
     }
+
 }
-BinarySearchTree.prototype.getMax = function (currentNode) {
-    var current = currentNode || this.root;
-    if (!current) {
-        return null;
+BinarySearchTree.prototype.put(node, key, val) {
+    if (node == null) {
+        return new TreeNode(key, val, 1);
     }
-    if (current.right) {
-        return this.getMax(current.right);
+    
+    if (key < node.key) {
+        node.left = this.put(node.left, key, val);
+    } else if (key > node.key) {
+        node.right = this.put(node.right, key, val);
     } else {
-        return current.content;
+        node.val = val;
     }
+    node.size = size(node.left) + size(node.right) + 1;
+    return node;
 }
-BinarySearchTree.prototype.floor = function (currentNode) {
-    var current = currentNode || this.root;
-    if (!current) {
+BinarySearchTree.prototype.min(node) {
+    if (!node) {
         return null;
     }
-    if (current.left) {
-        return this.getMax(current.left);
+    return node.left ? this.min(node.left) : node.val;
+}
+BinarySearchTree.prototype.max(node) {
+    if (!node) {
+        return null;
+    }
+    return node.right ? this.max(node.right) : node.val;
+}
+BinarySearchTree.prototype.floor(node) {
+    return this.max(node.left);
+}
+BinarySearchTree.prototype.ceil(node) {
+    return this min(node.right);
+}
+BinarySearchTree.prototype.rank(node, k) {
+    if (!node) {
+        return null;
+    }
+    let leftSize = this.size(node.left);
+    if (k < leftSize + 1) {
+        return this.rank(node.left, k);
+    } else if (k > leftSize + 1) {
+        return this.rank(node.right, k - leftSize - 1);
     } else {
-        return null;
+        return node;
     }
 }
-BinarySearchTree.prototype.ceil = function (currentNode) {
-    var current = currentNode || this.root;
-    if (!current) {
-        return null;
-    }
-    if (current.right) {
-        return this.getMin(current.right);
-    } else {
-        return null;
-    }
-}
-BinarySearchTree.prototype.contains = function () {
-}
-BinarySearchTree.prototype.isEmpty = function () {
-}
+
 
 module.exports = BinarySearchTree;
+
+function size(node) {
+    return node ? node.size : 0;
+}
