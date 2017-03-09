@@ -1,11 +1,10 @@
 // 二叉树节点
 
-var Node = function (key, val, n) {
+module.exports = function Node(key, val, n) {
     this.key = key
     this.val = val;
     this.left = null;
     this.right = null;
     this.size = n || 0;
+    return this;
 }
-
-module.exports = Node;

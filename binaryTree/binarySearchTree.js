@@ -2,12 +2,12 @@
 
 var TreeNode = require('./binaryTreeNode.js');
 
-function BinarySearchTree(compare) {
+function BinarySearchTree() {
     this.size = 0;
     this.root = null;
 }
 
-BinarySearchTree.prototype.get(node, key) {
+BinarySearchTree.prototype.get = function(node, key) {
     if (node == null) {
         return null;
     }
@@ -21,7 +21,7 @@ BinarySearchTree.prototype.get(node, key) {
     }
 
 }
-BinarySearchTree.prototype.put(node, key, val) {
+BinarySearchTree.prototype.put = function(node, key, val) {
     if (node == null) {
         return new TreeNode(key, val, 1);
     }
@@ -36,25 +36,25 @@ BinarySearchTree.prototype.put(node, key, val) {
     node.size = size(node.left) + size(node.right) + 1;
     return node;
 }
-BinarySearchTree.prototype.min(node) {
+BinarySearchTree.prototype.min = function(node) {
     if (!node) {
         return null;
     }
     return node.left ? this.min(node.left) : node.val;
 }
-BinarySearchTree.prototype.max(node) {
+BinarySearchTree.prototype.max = function(node) {
     if (!node) {
         return null;
     }
     return node.right ? this.max(node.right) : node.val;
 }
-BinarySearchTree.prototype.floor(node) {
+BinarySearchTree.prototype.floor = function(node) {
     return this.max(node.left);
 }
-BinarySearchTree.prototype.ceil(node) {
-    return this min(node.right);
+BinarySearchTree.prototype.ceil = function(node) {
+    return this.min(node.right);
 }
-BinarySearchTree.prototype.rank(node, k) {
+BinarySearchTree.prototype.rank = function(node, k) {
     if (!node) {
         return null;
     }
@@ -67,7 +67,7 @@ BinarySearchTree.prototype.rank(node, k) {
         return node;
     }
 }
-BinarySearchTree.prototype.deleteMin(node) {
+BinarySearchTree.prototype.deleteMin = function(node) {
     if (!node.left) {
         return node.right;
     }
@@ -75,7 +75,7 @@ BinarySearchTree.prototype.deleteMin(node) {
     node.size = size(node.left) + size(node.right) + 1;
     return node;
 }
-BinarySearchTree.prototype.delete(node, key) {
+BinarySearchTree.prototype.delete = function(node, key) {
     if (!node) {
         return null;
     }
