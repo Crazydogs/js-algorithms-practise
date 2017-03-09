@@ -58,7 +58,7 @@ BinarySearchTree.prototype.rank(node, k) {
     if (!node) {
         return null;
     }
-    let leftSize = this.size(node.left);
+    let leftSize = size(node.left);
     if (k < leftSize + 1) {
         return this.rank(node.left, k);
     } else if (k > leftSize + 1) {
@@ -66,6 +66,39 @@ BinarySearchTree.prototype.rank(node, k) {
     } else {
         return node;
     }
+}
+BinarySearchTree.prototype.deleteMin(node) {
+    if (!node.left) {
+        return node.right;
+    }
+    node.left = deleteMin(node.left);
+    node.size = size(node.left) + size(node.right) + 1;
+    return node;
+}
+BinarySearchTree.prototype.delete(node, key) {
+    if (!node) {
+        return null;
+    }
+    if (key < node.key) {
+        node.left = delete(node.left, key);
+    } else if (key > node.key) {
+        node.right = delete(node.right, key);
+    } else {
+        if (!node.left) {
+            return node.right;
+        }
+        if (!node.right) {
+            return node.left;
+        }
+        let t = this.min(node.right);
+        this.deleteMin(node.right);
+        t.left = node.left;
+        t.right = node.right;
+        t.size = size(t.left) + size(t.right) + 1;
+        return t;
+    }
+    node.size = size(node.left) + size(node.right) + 1;
+    return node;
 }
 
 
