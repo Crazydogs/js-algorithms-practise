@@ -13,29 +13,21 @@ var unionCheck = function (total) {
 
 // 联通两个节点
 unionCheck.prototype.union = function (node1, node2) {
-    if (this.find(node1) !== this.find(node2)) {
-        this.node[node1] = this.node[node2];
+    let root1 = this.find(node1);
+    let root2 = this.find(node2);
+
+    if (root1 !== root2) {
+        this.node[root] = root2;
         this.count -= 1;
     }
 }
 // 返回节点所处的联通分量
 unionCheck.prototype.find = function (index) {
-    // 查找路径中经过的节点
-    var path = [];
-    path.push(index);
-
-    // next 指针
-    var pointer = this.node[index];
-    while (pointer != this.node[pointer]) {
-        // 如果节点 next 不是指向自身，则将节点加入查找路径中，继续查找
-        path.push(pointer);
-        pointer = this.node[pointer];
+    let current = index;
+    while (node[current] != current) {
+        current = node[current];
     }
-    // 路径上的节点指针指向根节点
-    for (var i = 0; i < path.length; i++) {
-        this.node[path[i]] = pointer;
-    }
-    return pointer;
+    return current;
 }
 // 检查两个节点是否联通
 unionCheck.prototype.connected = function (node1, node2) {
