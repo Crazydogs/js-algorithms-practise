@@ -24,8 +24,8 @@ unionCheck.prototype.union = function (node1, node2) {
 // 返回节点所处的联通分量
 unionCheck.prototype.find = function (index) {
     let current = index;
-    while (node[current] != current) {
-        current = node[current];
+    while (this.node[current] != current) {
+        current = this.node[current];
     }
     return current;
 }
