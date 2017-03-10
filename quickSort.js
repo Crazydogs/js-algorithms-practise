@@ -1,50 +1,24 @@
-// 快速排序
-
-var quickSort = function (list, compare) {
-    var compareFunction = compare || function (a, b) {
-        if (a > b)  return 1;
-        if (a == b)  return 0;
-        if (a < b)  return -1;
-    };
-
-    if (!(list && list.length)) {
-        return [];
-    }
-    
-    function sort(list, lo, hi) {
-        if (hi <= lo) {
-            return;
+// 快排
+function quickSort(arr, lo, hi) {
+    if (lo >= hi) return;
+    let i = lo + 1;
+    let j = hi;
+    while (i < j) {
+        if (arr[i] > arr[lo]) {
+            swap(arr, i, j--);
+        } else {
+            i += 1;
         }
-        let j = partition(list, lo, hi);
-        fort(list, lo, j-1);
-        fort(list, j+1, hi);
     }
-    function partition(list, lo, hi) {
-        let i = lo;
-        let j = hi + 1;
-        let middle = list[lo];
+    var middle = arr[lo] < arr[i] ? i - 1 : i;
+    swap(arr, lo, middle);
+    quickSort(arr, lo, middle - 1);
+    quickSort(arr, middle + 1, hi);
+    return arr;
+}
 
-        while (true) {
-            while (compareFunction(list[++i], middle) == -1) {
-                if (i == hi) break;
-            }
-            while (compareFunction(middle, list[--j]) == -1) {
-                if (j == lo) break;
-            }
-            if (i >= j) break;
-            swap(list, i, j);
-        }
-        swap(list, lo, j);
-        return j;
-    }
-    function swap(list, x, y) {
-        // 交换元素
-        let temp = list[x];
-        list[x] = list[y];
-        list[y] = temp;
-    }
-
-    return sort(list);
+function swap(arr, i, j) {
+    [arr[i], arr[j]] = [arr[j], arr[i]]
 }
 
 module.exports = quickSort;
