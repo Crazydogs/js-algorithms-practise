@@ -7,6 +7,8 @@ let count = 0;
 let onStack = [];
 let cycle = false;
 
+let reversePost = [];
+
 function init(graph) {
     size = graph.v.length;
     marked = [];
@@ -16,6 +18,7 @@ function init(graph) {
     count = 0;
     onStack = [];
     cycle = false;
+    reversePost = [];
 }
 function graphDfs(graph, start) {
     // 深度优先搜索
@@ -43,6 +46,7 @@ function dfs(index) {
         }
     });
     onStack[index] = false
+    reversePost.push(index);
 }
 function hasCycle(graph) {
     init(graph);
@@ -53,6 +57,15 @@ function hasCycle(graph) {
         }
     }
     return cycle;
+}
+function topological(graph) {
+    init(graph);
+    for (let i = 0; i < size; i++) {
+        if (!marked[i]) {
+            dfs(i);
+        }
+    }
+    return reversePost;
 }
 
 function graphBfs(graph, start) {
@@ -82,5 +95,6 @@ function bfs(index) {
 module.exports = {
     graphDfs,
     graphBfs,
-    hasCycle
+    hasCycle,
+    topological
 };

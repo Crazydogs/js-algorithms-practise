@@ -34,3 +34,15 @@ console.log(str);
 console.log('=====');
 
 console.log('有向环: ' + diGraphFun.hasCycle(g));
+
+
+g = new DiGraph(13);
+const edges2 = [
+    [0, 1], [0, 5], [3, 5], [2, 3], [2, 0], [5, 4], [0, 6], [6, 4], [8, 7],
+    [7, 6], [6, 9], [9, 10], [9, 11], [9, 12], [11, 12]
+];
+edges2.map((val) => {
+    g.addEdge(val[0], val[1]);
+});
+g.toString();
+console.log(diGraphFun.topological(g));
