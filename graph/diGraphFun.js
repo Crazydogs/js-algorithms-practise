@@ -4,6 +4,7 @@ let edgeTo = [];
 let queue = [];
 let g = null;
 let count = 0;
+let onStack = [];
 let cycle = false;
 
 function init(graph) {
@@ -13,6 +14,7 @@ function init(graph) {
     queue = [];
     g = graph;
     count = 0;
+    onStack = [];
     cycle = false;
 }
 function graphDfs(graph, start) {
@@ -24,29 +26,26 @@ function graphDfs(graph, start) {
 }
 function dfs(index) {
     marked[index] = true;
+    onStack[index] = true
     g.adj(index).forEach(w => {
         if (!marked[w]) {
             edgeTo[w] = index;
             dfs(w);
-        } else {
-            if (w != index) {
-                cycle = true;
+        } else if (onStack[w]) {
+            cycle = [];
+            let current = index;
+            while (current != w) {
+                cycle.push(current);
+                current = edgeTo[current];
             }
+            cycle.push(w);
+            console.log('环: ' + cycle);
         }
-    })
-}
-function unionCount(graph) {
-    // 连通分量数量
-    init(graph);
-    for (let i = 0; i < size; i++) {
-        if (!marked[i]) {
-            dfs(i);
-            count += 1;
-        }
-    }
-    return count;
+    });
+    onStack[index] = false
 }
 function hasCycle(graph) {
+    init(graph);
     // 环检测
     for (let i = 0; i < size; i++) {
         if (!marked[i]) {
@@ -83,5 +82,5 @@ function bfs(index) {
 module.exports = {
     graphDfs,
     graphBfs,
-    unionCount
+    hasCycle
 };
