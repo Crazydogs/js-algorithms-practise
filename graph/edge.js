@@ -1,3 +1,4 @@
+// 有权重的无向边
 function Edge(point1, point2, weight) {
     this.p1 = point1;
     this.p2 = point2;

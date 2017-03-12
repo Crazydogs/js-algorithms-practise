@@ -12,7 +12,7 @@ queue.prototype.push = function (item) {
         this.first = new ListNode(item);
         this.last = this.first;
     } else {
-        var newLast = new ListNode(item, this.first);
+        var newLast = new ListNode(item);
         this.last.next = newLast;
         this.last = newLast;
     }
