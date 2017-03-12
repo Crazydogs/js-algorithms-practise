@@ -14,6 +14,10 @@ testHeap.add({weight: -1});
 console.log(testHeap);
 testHeap.add({weight: 0});
 console.log(testHeap);
+testHeap.change(1, {weight: 100});
+console.log(testHeap);
+testHeap.change(5, {weight: -100});
+console.log(testHeap);
 
 testHeap.pop();
 console.log(testHeap);

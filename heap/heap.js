@@ -49,5 +49,14 @@ Heap.prototype.pop = function pop() {
     this.sink(1);
     return min;
 }
+Heap.prototype.change = function change(index, val) {
+    if (this.less(this.arr[index], val)) {
+        this.arr[index] = val;
+        this.sink(index);
+    } else {
+        this.arr[index] = val;
+        this.swim(index);
+    }
+}
 
 module.exports = Heap;
