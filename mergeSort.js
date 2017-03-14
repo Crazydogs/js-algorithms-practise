@@ -1,57 +1,42 @@
 // 归并排序
-
-var mergeSort = function (list, compare) {
-    var compareFunciont = compare || function (a, b) {
-        if (a > b)  return 1;
-        if (a == b)  return 0;
-        if (a < b)  return -1;
-    };
-
-    if (!(list && list.length)) {
-        return [];
+let temp = [];
+function merge(arr, lo, mid, hi) {
+    // 复制数组到额外空间
+    temp.splice(lo, hi - lo + 1, ...arr.slice(lo, hi + 1));
+    let left = lo;
+    let right = mid;
+    for (let k = lo; k <= hi; k++) {
+        if (left >= mid) {
+            arr[k] = temp[right++];
+        } else if (right > hi) {
+            arr[k] = temp[left++];
+        } else if (temp[left] < temp[right]) {
+            arr[k] = temp[left++];
+        } else {
+            arr[k] = temp[right++];
+        }
+    }
+    return arr;
+}
+function sort(arr, lo, hi) {
+    if (lo >= hi) {
+        return arr;
+    }
+    if (lo == hi - 1) {
+        if (arr[lo] > arr[hi]) {
+            [arr[lo], arr[hi]] = [arr[hi], arr[lo]];
+        }
+        return arr;
     }
 
-    // 合并两个有序数组
-    function merge(left, right) {
-        var result = [];
-        var leftLength = left.length;
-        var rightLength = right.length;
-        var leftPointer = 0;
-        var rightPointer = 0;
-
-        while (leftPointer < leftLength && rightPointer < rightLength) {
-            if (compareFunciont(left[leftPointer], right[rightPointer]) < 0) {
-                result.push(left[leftPointer]);
-                leftPointer += 1;
-            } else {
-                result.push(right[rightPointer]);
-                rightPointer += 1;
-            }
-        }
-        
-        if (leftPointer !== leftLength) {
-            result = result.concat(left.slice(leftPointer));
-        } else if (rightPointer !== rightLength) {
-            result = result.concat(right.slice(rightPointer));
-        }
-
-        return result;
-    }
-
-    function sort(list) {
-        if (list.length == 1) {
-            return list;
-        }
-
-        var middle = Math.floor(list.length / 2);
-        var left = sort(list.slice(0, middle));
-        var right = sort(list.slice(middle));
-        console.log(left);
-        console.log(right);
-        return merge(left, right);
-    }
-
-    return sort(list);
+    let mid = Math.floor((lo + hi) / 2);
+    sort(arr, lo, mid - 1);
+    sort(arr, mid, hi);
+    return merge(arr, lo, mid, hi);
+}
+function mergeSort(arr) {
+    temp.length = arr.length;
+    return sort(arr, 0, arr.length - 1);
 }
 
 module.exports = mergeSort;
