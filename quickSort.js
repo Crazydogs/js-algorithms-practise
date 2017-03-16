@@ -1,19 +1,30 @@
 // 快排
 function quickSort(arr, lo, hi) {
     if (lo >= hi) return;
-    let i = lo + 1;
+    let i = lo;
     let j = hi;
+    let toRight = false;
     while (i < j) {
-        if (arr[i] > arr[lo]) {
-            swap(arr, i, j--);
+        if (toRight) {
+            if (arr[j] < arr[i]) {
+                swap(arr, i, j);
+                j--;
+                toRight = false;
+            } else {
+                i++;
+            }
         } else {
-            i += 1;
+            if (arr[j] < arr[i]) {
+                swap(arr, i, j);
+                i++;
+                toRight = true;
+            } else {
+                j--;
+            }
         }
     }
-    var middle = arr[lo] < arr[i] ? i - 1 : i;
-    swap(arr, lo, middle);
-    quickSort(arr, lo, middle - 1);
-    quickSort(arr, middle + 1, hi);
+    quickSort(arr, lo, i - 1);
+    quickSort(arr, i + 1, hi);
     return arr;
 }
 

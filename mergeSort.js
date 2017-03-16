@@ -6,15 +6,10 @@ function merge(arr, lo, mid, hi) {
     let left = lo;
     let right = mid;
     for (let k = lo; k <= hi; k++) {
-        if (left >= mid) {
-            arr[k] = temp[right++];
-        } else if (right > hi) {
-            arr[k] = temp[left++];
-        } else if (temp[left] < temp[right]) {
-            arr[k] = temp[left++];
-        } else {
-            arr[k] = temp[right++];
-        }
+        if (left >= mid) arr[k] = temp[right++];
+        else if (right > hi) arr[k] = temp[left++];
+        else if (temp[left] < temp[right]) arr[k] = temp[left++];
+        else arr[k] = temp[right++];
     }
     return arr;
 }
